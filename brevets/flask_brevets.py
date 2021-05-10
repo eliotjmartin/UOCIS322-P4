@@ -34,7 +34,6 @@ def index():
 @app.errorhandler(404)
 def page_not_found(error):
     app.logger.debug("Page not found")
-    flask.session['linkback'] = flask.url_for("index")
     return flask.render_template('404.html'), 404
 
 
@@ -52,15 +51,18 @@ def _calc_times():
     Expects one URL-encoded argument, the number of miles.
     """
     app.logger.debug("Got a JSON request")
-    km = request.args.get('km', 999, type=float)
-    app.logger.debug("km={}".format(km))
     app.logger.debug("request.args: {}".format(request.args))
+    km = request.args.get('km', 999, type=float)
+    start = request.args.get('start', type=str)  # get date
+    start = arrow.get(start, 'YYYY-MM-DDTHH:mm')  # convert to arrow
+    app.logger.debug("km={}".format(km))
+
     # FIXME!
     # Right now, only the current time is passed as the start time
     # and control distance is fixed to 200
     # You should get these from the webpage!
-    open_time = acp_times.open_time(km, 200, arrow.now().isoformat).format('YYYY-MM-DDTHH:mm')
-    close_time = acp_times.close_time(km, 200, arrow.now().isoformat).format('YYYY-MM-DDTHH:mm')
+    open_time = acp_times.open_time(km, 200, start).format('YYYY-MM-DDTHH:mm')  # pass with correct start time
+    close_time = acp_times.close_time(km, 200, start).format('YYYY-MM-DDTHH:mm')
     result = {"open": open_time, "close": close_time}
     return flask.jsonify(result=result)
 
