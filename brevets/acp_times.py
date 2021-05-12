@@ -26,12 +26,12 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
        A date object indicating the control open time.
        This will be in the same time zone as the brevet start time.
     """
-    times = {'200': 34, '300': 32, '400': 30, '600': 28, '1000': 26}
+    times = {'200': 34, '300': 32, '400': 32, '600': 30, '1000': 28}
     above200 = 200 / times['200']
     above300 = above200 + 100 / times['300']
     above400 = above300 + 100 / times['400']
     above600 = above400 + 200 / times['600']
-    above1000 = above600 + 400 / times['600']
+    above1000 = above600 + 400 / times['1000']
     over = {'200': above200, '300': above300, '400': above400, '600': above600, '1000': above1000}
     if control_dist_km >= brevet_dist_km:
        hours = over[str(brevet_dist_km)]
@@ -62,7 +62,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
        A date object indicating the control close time.
        This will be in the same time zone as the brevet start time.
     """
-    times = {'200': [15, 13.5], '300': [15, 20], '400': [15, 27], '600': [11.428, 40], '1000': [13.333, 75]}
+    times = {'200': [15, 13.5], '300': [15, 20], '400': [15, 27], '600': [15, 40], '1000': [11.428, 75]}
     if control_dist_km >= brevet_dist_km:
        hours = times[str(brevet_dist_km)][1]
     else:
@@ -88,5 +88,6 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 
 
 t = arrow.get('2020-01-01T00:00:00')
-a = close_time(200, 400, t).isoformat().format('YYYY-MM-DDTHH:mm')
+a = str(open_time(599, 600, arrow.get('2020-01-01T00:00:00')))
+b = "2020-01-01T04:00:00+00:00".strip()
 print(a)
