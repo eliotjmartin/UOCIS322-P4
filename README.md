@@ -1,5 +1,4 @@
 # A brevet time calculator for CIS 322 #
-Brevet time calculator.
 
 Eliot Martin | eliotm@uoregon.edu
 
