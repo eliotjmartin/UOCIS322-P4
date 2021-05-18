@@ -5,7 +5,7 @@ Eliot Martin | eliotm@uoregon.edu
 ## Overview
 
 This is a reimplementation of the RUSA ACP controle time calculator (https://rusa.org/octime_acp.html). This API is 
-implemented with Flask and AJAX and tested fully using nose tests. 
+implemented with Flask and AJAX and tested fully using nose tests (located in the tests folder). 
 
 ## Algorithm
 
